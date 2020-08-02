@@ -1,48 +1,54 @@
 -- Initializing Global Varibles
 -- 	Needed by OC
-component = require("component")
+local component = require('component')
 --		Needed to find the sides of the OC
-sides = require("sides")
+local sides = require('sides')
+--		Used to sleep the program
+local os = require('os')
 
+-- Variables to use componnents
 --	Needed to use Fission reactors
-r = component.nc_fission_reactor
-
+local r = component.nc_fission_reactor
 --	Needed to use restone signals
-s = component.redstone
+local s = component.redstone
+
+-- Variables within the program
+--	Maxium Energy storable
+local mxpwr = r.getMaxEnergyStored()
+--	Maxium Heat storable
+local mxheat = r.getMaxHeatLevel()
+--	Length to sleep after deactivating the Reactor
+local t = 2
+
+
+
+
+
 
 io.write('Time to get Spicy!!')
 
-while(true)
+--If facing 
+while(s.getInput(sides.east) ~= 0)
 	do
-	--	Varible used for the lever
-	--		Lever on the front of the OC block
-	local overide = s.getInput(sides.south)
 	--		Current Energy within the Reactor
 	local crntpwr = r.getEnergyStored()
 	--		Current Heat within the Reactor
 	local crntheat = r.getHeatLevel()
-	--		Maxium Energy storable
-	local mxpwr = r.getMaxEnergyStored()
-	--		Maxium Heat storable
-	local mxheat = r.getMaxHeatLevel()
-
-	while(overide ~= 0)
-		do
+	
+	
+	--	Put Redstone Singal into the front of the block for this part to work
+	while(s.getInput(sides.south) ~= 0 and crntpwr < .8*mxpwr and crntheat < .8*mxheat)
+	do
 		crntpwr = r.getEnergyStored()
-		crntheat = r.gethEnergyStored()
+		crntheat = r.getHeatLevel()
 		
-		-- Stops reactor if full of energy or too hot
-		if crntpwr > .8*mxpwr or cheat > .8*mxheat
-		then			
-			r.deactivate()
-		-- Starts reactor if cool and has little energy
-		elseif cpwr < .4*mxpwr and crntheat > .1*mxheat
-		then
-			r.activate()
-		end
-
-
+		r.activate()
+			
 	end
+	
+	--Allows the reactor to cool down
+	r.deactivate()
+	os.sleep(t)
 end
 
 
