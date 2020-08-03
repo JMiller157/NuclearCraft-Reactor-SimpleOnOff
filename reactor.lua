@@ -36,7 +36,7 @@ while(s.getInput(sides.east) ~= 0)
 	local crntheat = r.getHeatLevel()
 	
 	
-	--	Put Redstone Singal into the front of the block for this part to work
+	--	Put Redstone Singal into the bottom of the block for this part to work
 	while(s.getInput(sides.down) ~= 0 and crntpwr < .8*mxpwr and crntheat < .8*mxheat)
 	do
 		crntpwr = r.getEnergyStored()
