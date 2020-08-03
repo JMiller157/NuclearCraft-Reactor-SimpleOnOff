@@ -27,7 +27,7 @@ local t = 2
 
 io.write('Time to get Spicy!!')
 
---If facing 
+--Lever needs to be on the side to the right of the computer screen
 while(s.getInput(sides.east) ~= 0)
 	do
 	--		Current Energy within the Reactor
